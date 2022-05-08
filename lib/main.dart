@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'expense.dart';
+import 'package:transport_expense_tracker/widgets/expenses_list.dart';
 
 void main() {
   runApp(MyApp());
@@ -33,6 +35,8 @@ class _MainScreenState extends State<MainScreen> {
 
   DateTime? travelDate;
 
+  List<Expense> myExpenses = [];
+
   void saveForm() {
     bool isValid = form.currentState!.validate();
 
@@ -42,6 +46,14 @@ class _MainScreenState extends State<MainScreen> {
       print(purpose);
       print(mode);
       print(cost!.toStringAsFixed(2));
+
+      myExpenses.insert(
+          0,
+          Expense(
+              purpose: purpose!,
+              mode: mode!,
+              cost: cost!,
+              TravelDate: travelDate!));
 
       // Hide the keyboard
       FocusScope.of(context).unfocus();
@@ -55,6 +67,37 @@ class _MainScreenState extends State<MainScreen> {
         content: Text('Travel expense added successfully!'),
       ));
     }
+  }
+
+  void removeItem(i) {
+    // press the delete button
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            // ask user 
+            title: Text('Confirmation'),
+            content: Text('Are you sure you want to delete'),
+            actions: [
+                  // if no
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('No'),
+              ),
+              // if yes
+              TextButton(
+                  onPressed: () {
+                    setState(() {
+                      myExpenses.removeAt(i);
+                    });
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Yes')),
+            ],
+          );
+        });
   }
 
   void presentDatePicker(BuildContext context) {
@@ -76,6 +119,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text('Transport Expense Tracker'),
           actions: [
@@ -167,7 +211,21 @@ class _MainScreenState extends State<MainScreen> {
                           presentDatePicker(context);
                         })
                   ],
-                )
+                ),
+                Expanded(
+                    child: myExpenses.length > 0
+                        ? Container(
+                            height: 200,
+                            child: ExpensesList(myExpenses, removeItem),
+                          )
+                        : Column(
+                            children: [
+                              SizedBox(height: 20),
+                              Image.asset('images/picture.png', width: 300),
+                              Text('No Expenses yet, add a new one today!',
+                                  style: Theme.of(context).textTheme.subtitle1),
+                            ],
+                          )),
               ],
             ),
           ),
