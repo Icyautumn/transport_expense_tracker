@@ -7,8 +7,6 @@ import 'package:transport_expense_tracker/widgets/expenses_list.dart';
 
 class ExpenseListScreen extends StatelessWidget {
 
-  
-
   static String routeName = '/expense-list';
 
   @override
@@ -24,7 +22,7 @@ class ExpenseListScreen extends StatelessWidget {
         Column(
           children: [
             SizedBox(height: 20,),
-            Image.asset('Images/picture.png', width: 300),
+            Image.asset('images/picture.png', width: 300),
             Text('No expenses yet, add a new one today!', 
             style: Theme.of(context).textTheme.subtitle1),
           ],

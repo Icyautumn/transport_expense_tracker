@@ -41,7 +41,6 @@ class _ExpensesListState extends State<ExpensesList> {
 
   @override
   Widget build(BuildContext context) {
-
     AllExpenses expenseList = Provider.of<AllExpenses>(context);
 
     return ListView.separated(

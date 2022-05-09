@@ -3,12 +3,9 @@ import 'package:intl/intl.dart';
 import 'package:transport_expense_tracker/all_expense.dart';
 import 'package:transport_expense_tracker/widgets/expenses_list.dart';
 import 'package:provider/provider.dart';
-
+import '../expense.dart';
 
 class AddExpenseScreen extends StatefulWidget {
-
-  
-
   static String routeName = '/add-expense';
 
   @override
@@ -22,29 +19,9 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   String? mode;
   double? cost;
   DateTime? travelDate;
+  List<Expense> myExpenses = [];
 
-  void saveForm(AllExpenses expensesList) {
-    bool isValid = form.currentState!.validate();
-
-    if (isValid) {
-      form.currentState!.save();
-      if (travelDate == null) travelDate = DateTime.now();
-
-      expensesList.addExpense(purpose,mode,cost,travelDate);
-
-      // Hide the keyboard
-      FocusScope.of(context).unfocus();
-
-      //reset the form
-      form.currentState!.reset();
-      travelDate = null;
-
-      //shows a snackbar
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Travel expense added successfully!'),
-      ));
-    }
-  }
+  void saveForm() {}
 
   void presentDatePicker(BuildContext context) {
     showDatePicker(
@@ -64,11 +41,35 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
 
   @override
   Widget build(BuildContext context) {
+    AllExpenses expenseList = Provider.of<AllExpenses>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Expense'),
         actions: [
-          IconButton(onPressed: saveForm, icon: Icon(Icons.save))
+          IconButton(
+              onPressed: () {
+                bool isValid = form.currentState!.validate();
+
+                if (isValid) {
+                  form.currentState!.save();
+                  if (travelDate == null) travelDate = DateTime.now();
+
+                  expenseList.addExpense(purpose, mode, cost, travelDate);
+
+                  // Hide the keyboard
+                  FocusScope.of(context).unfocus();
+
+                  //reset the form
+                  form.currentState!.reset();
+                  travelDate = null;
+
+                  //shows a snackbar
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text('Travel expense added successfully!'),
+                  ));
+                }
+              },
+              icon: Icon(Icons.save))
         ],
       ),
       body: Container(
