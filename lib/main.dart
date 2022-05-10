@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:transport_expense_tracker/screens/add_expense_screen.dart';
+import 'package:transport_expense_tracker/screens/edit_expense_screen.dart';
 import 'package:transport_expense_tracker/screens/expense_list_Screen.dart';
 import 'package:transport_expense_tracker/services/firestore_service.dart';
 import 'package:transport_expense_tracker/widgets/app_drawer.dart';
@@ -32,6 +33,9 @@ class MyApp extends StatelessWidget {
             },
             ExpenseListScreen.routeName: (_) {
               return ExpenseListScreen();
+            },
+            EditExpenseScreen.routeName: (_) {
+              return EditExpenseScreen();
             },
           }),
     );

@@ -23,6 +23,7 @@ class ExpenseListScreen extends StatelessWidget {
                     title: Text('My Expense'),
                   ),
                   body: Container(
+                      // find the length of snapshot.data
                       alignment: Alignment.center,
                       child: snapshot.data == null
                           ? Column(

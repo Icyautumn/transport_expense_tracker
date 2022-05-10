@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transport_expense_tracker/expense.dart';
+import 'package:transport_expense_tracker/screens/edit_expense_screen.dart';
 import 'package:transport_expense_tracker/services/firestore_service.dart';
 
 class ExpensesList extends StatefulWidget {
@@ -64,6 +65,9 @@ class _ExpensesListState extends State<ExpensesList> {
                   removeItem(snapshot.data![i].id);
                 },
               ),
+              onTap: () {
+                Navigator.pushNamed(context, EditExpenseScreen.routeName, arguments: snapshot.data![i]);
+              },
             );
           },
           itemCount: snapshot.data!.length,
