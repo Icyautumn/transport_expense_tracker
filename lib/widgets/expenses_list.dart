@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:transport_expense_tracker/all_expense.dart';
 import 'package:transport_expense_tracker/expense.dart';
+import 'package:transport_expense_tracker/services/firestore_service.dart';
 
 class ExpensesList extends StatefulWidget {
   @override
@@ -11,7 +11,9 @@ class ExpensesList extends StatefulWidget {
 
 
 class _ExpensesListState extends State<ExpensesList> {
-  void removeItem(int i, AllExpenses myExpenses) {
+  FireStoreService fsService = FireStoreService();
+
+  void removeItem(String id) {
     showDialog(
         context: context,
         builder: (context) {
@@ -23,7 +25,7 @@ class _ExpensesListState extends State<ExpensesList> {
               TextButton(
                   onPressed: () {
                     setState(() {
-                      myExpenses.removeExpense(i);
+                      fsService.removeExpense(id);
                     });
                     Navigator.of(context).pop();
                   },
@@ -41,28 +43,36 @@ class _ExpensesListState extends State<ExpensesList> {
 
   @override
   Widget build(BuildContext context) {
-    AllExpenses expenseList = Provider.of<AllExpenses>(context);
 
-    return ListView.separated(
-      itemBuilder: (ctx, i) {
-        return ListTile(
-          leading: CircleAvatar(
-            child: Text(expenseList.getMyExpense()[i].mode),
-          ),
-          title: Text(expenseList.getMyExpense()[i].purpose),
-          subtitle: Text(expenseList.getMyExpense()[i].cost.toStringAsFixed(2)),
-          trailing: IconButton(
-            icon: Icon(Icons.delete),
-            onPressed: () {
-              removeItem(i, expenseList);
-            },
-          ),
+    return StreamBuilder<List<Expense>>(
+      stream: fsService.getExpenses(),
+      builder: (context, snapshot) {
+        if(snapshot.connectionState == ConnectionState.waiting){
+          return Center(child: CircularProgressIndicator());
+        }else{
+        return ListView.separated(
+          itemBuilder: (ctx, i) {
+            return ListTile(
+              leading: CircleAvatar(
+                child: Text(snapshot.data![i].mode),
+              ),
+              title: Text(snapshot.data![i].purpose),
+              subtitle: Text(snapshot.data![i].cost.toStringAsFixed(2)),
+              trailing: IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () {
+                  removeItem(snapshot.data![i].id);
+                },
+              ),
+            );
+          },
+          itemCount: snapshot.data!.length,
+          separatorBuilder: (ctx, i) {
+            return Divider(height: 3, color: Colors.blueGrey);
+          },
         );
-      },
-      itemCount: expenseList.getMyExpense().length,
-      separatorBuilder: (ctx, i) {
-        return Divider(height: 3, color: Colors.blueGrey);
-      },
+      }
+      }
     );
   }
 }
