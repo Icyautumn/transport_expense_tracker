@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:transport_expense_tracker/models/expense.dart';
-import 'package:transport_expense_tracker/screens/add_expense_screen.dart';
+import 'package:transport_expense_tracker/models/lesson_detail.dart';
+import 'package:transport_expense_tracker/screens/add_lesson_detail_screen.dart';
 import 'package:transport_expense_tracker/services/firestore_service.dart';
 import 'package:transport_expense_tracker/widgets/app_drawer.dart';
-import 'package:transport_expense_tracker/widgets/expenses_list.dart';
+import 'package:transport_expense_tracker/widgets/lesson_detail_list.dart';
 
 class ExpenseListScreen extends StatefulWidget {
   static String routeName = '/expense-list';
@@ -18,8 +18,8 @@ class _ExpenseListScreenState extends State<ExpenseListScreen> {
   Widget build(BuildContext context) {
     FirestoreService fsService = FirestoreService();
 
-    return StreamBuilder<List<Expense>>(
-      stream: fsService.getExpenses(),
+    return StreamBuilder<List<LessonDetail>>(
+      stream: fsService.getLessonDetail(),
       builder: (context, snapshot) {
         return snapshot.connectionState == ConnectionState.waiting ? 
         Center(child: CircularProgressIndicator()) :

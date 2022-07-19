@@ -3,15 +3,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:transport_expense_tracker/models/expense.dart';
-import 'package:transport_expense_tracker/screens/add_expense_screen.dart';
+import 'package:transport_expense_tracker/models/lesson_detail.dart';
+import 'package:transport_expense_tracker/screens/add_lesson_detail_screen.dart';
 import 'package:transport_expense_tracker/screens/auth_screen.dart';
-import 'package:transport_expense_tracker/screens/edit_expense_screen.dart';
-import 'package:transport_expense_tracker/screens/expense_list_screen.dart';
+import 'package:transport_expense_tracker/screens/edit_lesson_detail_screen.dart';
+import 'package:transport_expense_tracker/screens/lesson_detail_list_screen.dart';
 import 'package:transport_expense_tracker/services/auth_service.dart';
 import 'package:transport_expense_tracker/services/firestore_service.dart';
 import 'package:transport_expense_tracker/widgets/app_drawer.dart';
-import 'package:transport_expense_tracker/widgets/expenses_list.dart';
+import 'package:transport_expense_tracker/widgets/lesson_detail_list.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -91,16 +91,12 @@ class _MainScreenState extends State<MainScreen> {
       });
     }
 
-    return StreamBuilder<List<Expense>>(
-        stream: fsService.getExpenses(),
+    return StreamBuilder<List<LessonDetail>>(
+        stream: fsService.getLessonDetail(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting)
             return Center(child: CircularProgressIndicator());
           else {
-            double sum = 0;
-            snapshot.data!.forEach((doc) {
-              sum += doc.cost;
-            });
             return Scaffold(
               resizeToAvoidBottomInset: false,
               appBar: AppBar(
@@ -113,8 +109,6 @@ class _MainScreenState extends State<MainScreen> {
               body: Column(
                 children: [
                   Image.asset('images/creditcard.png'),
-                  Text('Total spent: \$' + sum.toStringAsFixed(2),
-                      style: Theme.of(context).textTheme.titleLarge)
                 ],
               ),
               drawer: AppDrawer(),

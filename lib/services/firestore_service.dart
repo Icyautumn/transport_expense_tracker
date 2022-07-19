@@ -1,39 +1,43 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:transport_expense_tracker/models/expense.dart';
+import 'package:transport_expense_tracker/models/lesson_detail.dart';
 import 'package:transport_expense_tracker/services/auth_service.dart';
 
 class FirestoreService {
   AuthService authService = AuthService();
 
-  addExpense(purpose, mode, cost, travelDate) {
-    return FirebaseFirestore.instance.collection('expenses').add({
-      'email' : authService.getCurrentUser()!.email ,
-      'purpose': purpose,
-      'mode': mode,
-      'cost': cost,
-      'travelDate': travelDate
+  addExpense(lessonType, lessonDetail, lessonImage, dateCreated, studentEmail) {
+    print(dateCreated);
+    return FirebaseFirestore.instance.collection('LessonDetail').add({
+      'teacherEmail' : authService.getCurrentUser()!.email ,
+      'lessonType': lessonType,
+      'LessonDetail': lessonDetail,
+      'lessonImage': lessonImage,
+      'dateCreated': dateCreated,
+      'studentEmail': studentEmail,
     });
   }
 
   removeExpense(id) {
-    return FirebaseFirestore.instance.collection('expenses').doc(id).delete();
+    return FirebaseFirestore.instance.collection('LessonDetail').doc(id).delete();
   }
 
-  Stream<List<Expense>> getExpenses() {
-    return FirebaseFirestore.instance.collection('expenses')
-    .where('email', isEqualTo: authService.getCurrentUser()!.email).
+  Stream<List<LessonDetail>> getLessonDetail() {
+    return FirebaseFirestore.instance.collection('LessonDetail')
+    .where('teacherEmail', isEqualTo: authService.getCurrentUser()!.email).
     snapshots().map(
         (snapshot) => snapshot.docs
-            .map<Expense>((doc) => Expense.fromMap(doc.data(), doc.id))
+            .map<LessonDetail>((doc) => LessonDetail.fromMap(doc.data(), doc.id))
             .toList());
   }
 
-  editExpense(id, purpose, mode, cost, travelDate) {
-    return FirebaseFirestore.instance.collection('expenses').doc(id).set({
-      'purpose': purpose,
-      'mode': mode,
-      'cost': cost,
-      'travelDate': travelDate
+  editExpense(id, dateCreated, lessonType, studentEmail, lessonImage, lessonDetail) {
+    return FirebaseFirestore.instance.collection('LessonDetail').doc(id).set({
+      'teacherEmail' : authService.getCurrentUser()!.email ,
+      'lessonType': lessonType,
+      'LessonDetail': lessonDetail,
+      'lessonImage': lessonImage,
+      'dateCreated': dateCreated,
+      'studentEmail': studentEmail,
     });
   }
 }

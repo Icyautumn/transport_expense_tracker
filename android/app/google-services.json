@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "428263279051",
-    "project_id": "travel-expenses-b5a42",
-    "storage_bucket": "travel-expenses-b5a42.appspot.com"
+    "project_number": "560093570118",
+    "project_id": "travel-expenses-ddc3e",
+    "storage_bucket": "travel-expenses-ddc3e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:428263279051:android:e2d3cf45c64dd211f4ce4e",
+        "mobilesdk_app_id": "1:560093570118:android:a042890fa51ecb03c55647",
         "android_client_info": {
           "package_name": "com.example.transport_expense_tracker"
         }
       },
       "oauth_client": [
         {
-          "client_id": "428263279051-1b58t7faka4i1m6s7rrbdn42jcjf431h.apps.googleusercontent.com",
+          "client_id": "560093570118-i25i7ag6ju6fu5glivp2nhue1vkfofhs.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBO05muQLeUAvxcMuK7jz6xf7ESDz-D44s"
+          "current_key": "AIzaSyCmEYcy8WSjHmqH1b4vB6XXG2scD0WV5P0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "428263279051-1b58t7faka4i1m6s7rrbdn42jcjf431h.apps.googleusercontent.com",
+              "client_id": "560093570118-i25i7ag6ju6fu5glivp2nhue1vkfofhs.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:transport_expense_tracker/main.dart';
-import 'package:transport_expense_tracker/screens/expense_list_screen.dart';
+import 'package:transport_expense_tracker/screens/lesson_detail_list_screen.dart';
 import 'package:transport_expense_tracker/services/auth_service.dart';
 
 class AppDrawer extends StatelessWidget {
